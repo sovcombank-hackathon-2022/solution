@@ -1,0 +1,160 @@
+{
+  "methods": [
+    {
+      "name": "rpc.discover",
+      "params": [],
+      "result": {
+        "name": "OpenRPC Schema",
+        "schema": {
+          "$ref": "https://raw.githubusercontent.com/open-rpc/meta-schema/master/schema.json"
+        }
+      }
+    },
+    {
+      "name": "get_currency_rate",
+      "params": [
+        {
+          "name": "currency",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "summary": "Идентификатор валюты: USD, EUR, и тд."
+        }
+      ],
+      "result": {
+        "name": "get_currency_rate_result",
+        "schema": {
+          "type": "number"
+        }
+      },
+      "summary": "Возвращает биржевой курс указанной валюты по отношению к рублю.",
+      "paramStructure": "by-name"
+    },
+    {
+      "name": "get_latest_rates",
+      "params": [],
+      "result": {
+        "name": "get_latest_rates_result",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "timestamp": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "currency": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "rate": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              }
+            },
+            "required": [
+              "rate",
+              "currency"
+            ],
+            "x-cl-class": "RATE-INFO",
+            "x-cl-package": "RATES/RATE/API"
+          }
+        }
+      },
+      "summary": "Возвращает биржевые курсы все известных валют.",
+      "paramStructure": "by-name"
+    },
+    {
+      "name": "get_history",
+      "params": [
+        {
+          "name": "currency",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "summary": "Код валюты."
+        },
+        {
+          "name": "period",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true,
+          "summary": "Количество секунд в прошлое, за которое нужно отдать данные."
+        },
+        {
+          "name": "candle_scale",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true,
+          "summary": "Количество секунд в одной свече."
+        }
+      ],
+      "result": {
+        "name": "get_history_result",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "timestamp": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "currency": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "rate": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              }
+            },
+            "required": [
+              "rate",
+              "currency"
+            ],
+            "x-cl-class": "RATE-INFO",
+            "x-cl-package": "RATES/RATE/API"
+          }
+        }
+      },
+      "summary": "Возвращает историю изменения курса для указанной валюты.",
+      "description": "Порядок сортировки - от более старых данных к более свежим.",
+      "paramStructure": "by-name"
+    }
+  ],
+  "openrpc": "1.0.0",
+  "info": {
+    "title": "Rating API",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "name": "default",
+      "url": "https://localhost/"
+    }
+  ]
+}

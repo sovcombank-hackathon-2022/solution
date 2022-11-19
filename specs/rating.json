@@ -1,0 +1,177 @@
+{
+  "methods": [
+    {
+      "name": "rpc.discover",
+      "params": [],
+      "result": {
+        "name": "OpenRPC Schema",
+        "schema": {
+          "$ref": "https://raw.githubusercontent.com/open-rpc/meta-schema/master/schema.json"
+        }
+      }
+    },
+    {
+      "name": "get_current_user_accounts",
+      "params": [],
+      "result": {
+        "name": "get_current_user_accounts_result",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "created_at": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "updated_at": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "synced": {
+                "type": "boolean"
+              },
+              "id": {
+                "type": "integer"
+              },
+              "user_id": {
+                "type": "integer"
+              },
+              "currency": {
+                "type": "string",
+                "description": "Одно из значений из *currencies*."
+              },
+              "amount": {
+                "type": "number",
+                "description": "ID объекта, за который оставлен голос."
+              }
+            },
+            "required": [
+              "amount",
+              "currency",
+              "user_id",
+              "id",
+              "updated_at",
+              "created_at"
+            ],
+            "x-cl-class": "ACCOUNT",
+            "x-cl-package": "ACCOUNTS/ACCOUNT/MODEL",
+            "description": "Запись о количестве денег на счету пользователя."
+          }
+        }
+      },
+      "summary": "Показывает аккаунты текущего пользователя.",
+      "paramStructure": "by-name"
+    },
+    {
+      "name": "add_account",
+      "params": [
+        {
+          "name": "currency",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "add_account_result",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "created_at": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "x-cl-class": "T",
+              "x-cl-package": "COMMON-LISP"
+            },
+            "updated_at": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "x-cl-class": "T",
+              "x-cl-package": "COMMON-LISP"
+            },
+            "synced": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "user_id": {
+              "type": "integer"
+            },
+            "currency": {
+              "type": "string",
+              "description": "Одно из значений из *currencies*."
+            },
+            "amount": {
+              "type": "number",
+              "description": "ID объекта, за который оставлен голос."
+            }
+          },
+          "required": [
+            "amount",
+            "currency",
+            "user_id",
+            "id",
+            "updated_at",
+            "created_at"
+          ],
+          "x-cl-class": "ACCOUNT",
+          "x-cl-package": "ACCOUNTS/ACCOUNT/MODEL",
+          "description": "Запись о количестве денег на счету пользователя."
+        }
+      },
+      "summary": "Показывает аккаунты текущего пользователя.",
+      "paramStructure": "by-name"
+    },
+    {
+      "name": "add_operation",
+      "params": [
+        {
+          "name": "account_id",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        },
+        {
+          "name": "amount",
+          "schema": {
+            "type": "number"
+          },
+          "required": true,
+          "summary": "В базе хранится как DECIMAL."
+        }
+      ],
+      "result": {
+        "name": "add_operation_result",
+        "schema": {
+          "type": "number"
+        }
+      },
+      "summary": "Выполняет над счётом операцию пополнения или снятия. Отдаёт новый баланс аккаунта.",
+      "description": "TODO: В будущем здесь надо навертеть всяких проверок, блокировок, да двухфазных коммитов.",
+      "paramStructure": "by-name"
+    }
+  ],
+  "openrpc": "1.0.0",
+  "info": {
+    "title": "Accounts API",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "name": "default",
+      "url": "https://localhost/"
+    }
+  ]
+}
