@@ -47,7 +47,8 @@
              :col-type :text
              :reader order-currency
              :documentation "Одно из значений из *currencies*.")
-   (limit-price :initarg :value
+   (limit-price :initarg :limit-price
+                :initform nil
                 :type (or null
                           double-float)
                 :col-type :decimal
@@ -56,7 +57,7 @@
                              (coerce item 'double-float)))
                 :reader order-limit-price
                 :documentation "Значение курса при котором должна сработать заявка.")
-   (muy-price :initarg :value
+   (buy-price :initarg :buy-price
               :type double-float
               :col-type :decimal
               :inflate (lambda (item)

@@ -34,3 +34,25 @@
         (where 
          (:= :user-id user-id))
         (order-by (:desc :created-at))))))
+
+
+
+(define-rpc-method (processing-api create-order) (account-id currency buy-price order-type
+                                                             &key limit-price)
+  (:param account-id integer)
+  (:param currency string)
+  (:param order-type string)
+  (:param buy-price double-float)
+  (:param limit-price double-float)
+  (:summary "Даёт новую заявку на покупку или продажу.")
+  (:result order)
+
+  (with-session (user-id)
+    (with-connection (:database-name "processing")
+      (create-dao 'order
+                  :user-id user-id
+                  :account-id account-id
+                  :currency currency
+                  :buy-price buy-price
+                  :limit-price limit-price
+                  :type order-type))))
