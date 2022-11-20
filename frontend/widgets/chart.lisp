@@ -22,6 +22,9 @@
                 #:get-user-token)
   (:import-from #:rates/client
                 #:make-rates)
+  (:import-from #:distributions
+                #:draw
+                #:r-normal)
   (:export
    #:make-chart-widget))
 (in-package #:app/widgets/chart)
@@ -45,7 +48,7 @@
 
 (defun render-history (history)
   (flet ((rand (mean &optional (variance 0.1))
-           (distributions:draw (distributions:r-normal mean variance))))
+           (draw (r-normal mean variance))))
     (loop for item in history
           for close = (rates/client:rate-info-rate item)
           for open = (rand close)

@@ -9,7 +9,9 @@
                 #:assoc-value)
   (:import-from #:distributions
                 #:r-normal
-                #:draw))
+                #:draw)
+  (:import-from #:common/cron
+                #:job))
 (in-package #:rates/adapters/random)
 
 
@@ -108,6 +110,6 @@
 
 
 (defmethod setup-cron ((adapter (eql :random)))
-  (common/cron:job "Update random currency rates."
-                   every 15.second
-                   (update-rates adapter)))
+  (job "Update random currency rates."
+       every 15.second
+       (update-rates adapter)))

@@ -17,10 +17,6 @@
                 #:fmt)
   (:import-from #:common/db
                 #:with-connection)
-  (:import-from #:platform/profession/model
-                #:profession)
-  (:import-from #:platform/skill/model
-                #:skill)
   (:import-from #:alexandria
                 #:remove-from-plistf)
   (:import-from #:common/permissions
@@ -45,42 +41,16 @@
   (make-instance 'edit-profile))
 
 
-(defun get-profession-id (text)
-  (when text
-    (with-connection ()
-      (mito:object-id
-       (or (mito:find-dao 'profession
-                          :title (str:trim text))
-           (mito:create-dao 'profession
-                            :title (str:trim text)))))))
-
-(defun get-skill-ids (text &key hard)
-  (when text
-    (let ((titles (mapcar #'str:trim (str:split ";" text))))
-      (with-connection ()
-        (loop for title in titles
-              collect (mito:object-id
-                       (or (mito:find-dao 'skill
-                                          :title title)
-                           (mito:create-dao 'skill
-                                            :title title
-                                            :hard hard))))))))
-
-
 (defun parse-bool (text)
   (string-equal (str:trim text)
                 "да"))
 
 
 (defmethod render ((widget edit-profile))
-  (flet ((create-user (&rest args &key id email fio birthday gender phone country city profession skills
-                                    education job looking-for-job looking-for-hackathon about
-                                    skill-ids
-                                    profession-id
-                                    avatar-url
+  (flet ((create-user (&rest args &key id email fio birthday gender phone country city
+                                       education job about avatar-url
                        &allow-other-keys)
-           (declare (ignorable id email fio birthday gender phone country city profession skills
-                               education job looking-for-job looking-for-hackathon about
+           (declare (ignorable id email fio birthday gender phone country city about
                                avatar-url))
            (handler-case
                (progn
@@ -91,16 +61,8 @@
                                         (string-equal key "action"))
                                append (list key value)))
            
-                 (setf (getf args :looking-for-job)
-                       (parse-bool looking-for-job))
-                 (setf (getf args :profession-id)
-                       (get-profession-id profession-id))
-                 (setf (getf args :skill-ids)
-                       (get-skill-ids skill-ids))
                  (setf (getf args :password-hash)
                        (get-password-hash "test"))
-                 (setf (getf args :looking-for-hackathon)
-                       (parse-bool looking-for-hackathon))
                  (setf (getf args :avatar-url)
                        (get-avatar-url-for email))
 

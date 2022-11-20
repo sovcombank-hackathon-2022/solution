@@ -103,7 +103,7 @@
 (defun start (&rest args
               &key
                 (port 8080)
-		(interface "localhost"))
+		(interface "0.0.0.0"))
   ;; Just to suppres debug logs to TTY from Reblocks.
   ;; I'll need to fix Reblocks to prohibit it from
   ;; configure logging if they are already configured.

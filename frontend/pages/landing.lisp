@@ -27,7 +27,9 @@
               (profile (passport/client::my-profile client)))
          (with-html
            (:h1 ("Привет ~A!"
-                 (passport/client::user-fio profile))))))
+                 (passport/client::user-fio profile)))
+
+           (:p "Тут должна быть какая-то начальная страница с дашбордиком, новостями валютного рынка и основными параметрами эффективности портфолио."))))
       (t
        (with-html
          (:h1 "Похоже, что нужно залогиниться."))))))

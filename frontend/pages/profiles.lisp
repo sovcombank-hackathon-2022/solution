@@ -20,8 +20,6 @@
                 #:rpc-error-message)
   (:import-from #:alexandria
                 #:appendf)
-  (:import-from #:rating/client
-                #:make-rating)
   (:import-from #:passport/user
                 #:looking-for-job-p
                 #:looking-for-hackathon-p)
@@ -55,9 +53,7 @@
    (avatar-url :initarg :avatar-url
                :reader user-avatar)
    (raw-user :initarg :raw
-             :reader raw-user)
-   (rating :initarg :rating
-           :reader user-rating)))
+             :reader raw-user)))
 
 
 (defun make-profiles-widget ()
@@ -89,17 +85,13 @@
     (multiple-value-bind (users next-page-func)
         (funcall (next-page-func widget))
       (let* ((ids (mapcar #'passport/client:user-id users))
-             (rating-client (rating/client::connect (make-rating)))
-             (ratings (rating/client:get-ratings rating-client "user" ids))
              (new-profiles
                (loop for user in users
-                     for rating in ratings
                      collect (make-instance 'user-profile
                                             :raw user
                                             :id (passport/client:user-id user)
                                             :avatar-url (passport/client:user-avatar-url user)
-                                            :fio (passport/client:user-fio user)
-                                            :rating rating))))
+                                            :fio (passport/client:user-fio user)))))
         (appendf (users-list widget)
                  new-profiles))
       (setf (next-page-func widget)
@@ -111,30 +103,11 @@
     (:img :class "avatar"
           :src (user-avatar widget))
     (:div :class "data"
-          (:span :class "fio" (user-fio widget)
-                 ;; TODO: Добавить в модель
-                 (:span :class "fio-label"
-                        "Участник"))
-          (:span :class "specialization"
-                 "React разработчик" ;; TODO: добавить в модель
-                 )
-          (:span :class "tags"
-                 ;; TODO: добавить в модель
-                 (when (passport/client::user-looking-for-job (raw-user widget))
-                   (:span :class "tag gray"
-                          "Ищет команду"))
-                 (when (passport/client::user-looking-for-hackathon (raw-user widget))
-                   (:span :class "tag"
-                          "Хочет в хакатон"))))
+          (:span :class "fio" (user-fio widget)))
     (:div :class "controls"
           (:span :class "invite-button"
                  (:input :class "button success small"
-                         :value "Позвать"))
-          (:span :class "rating"
-                 (:span :class "rating-value"
-                        ("~A" (user-rating widget)))
-                 (:span :class "rating-label"
-                        "в рейтинге")))))
+                         :value "Позвать")))))
 
 
 (defmethod get-dependencies ((widget user-profile))
@@ -187,21 +160,7 @@
         :display flex
         :margin-left 1rem
         :margin-right 1rem
-        (input :margin 0))
-       (.rating
-        :display flex                   
-        :flex-direction row             
-        :align-items center             
-        :padding 3px 10px               
-        :gap 10px                       
-
-        :width 149px                    
-        :height 36px                    
-        
-        :background "#F9F5FF"             
-        :border-radius 8px
-        (.rating-value :color "#6941C6")
-        (.rating-label :color "#344054"))))))
+        (input :margin 0))))))
 
 
 (defmethod render ((widget profiles))

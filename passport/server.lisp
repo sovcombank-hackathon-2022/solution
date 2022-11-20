@@ -1,8 +1,6 @@
 (uiop:define-package #:passport/server
   (:use #:cl
         #:common/utils)
-  (:import-from #:rating/client
-                #:make-rating)
   (:import-from #:openrpc-server
                 #:return-error
                 #:define-rpc-method)
@@ -42,8 +40,6 @@
                 #:order-by)
   (:import-from #:mito
                 #:find-dao)
-  (:import-from #:platform/client
-                #:make-platform)
   (:import-from #:function-cache
                 #:defcached)
   (:import-from #:common/permissions

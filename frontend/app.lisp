@@ -19,16 +19,12 @@
   (:import-from #:app/pages/profiles
                 #:make-account-widget
                 #:make-profiles-widget)
-  (:import-from #:app/pages/jobs
-                #:make-jobs-widget)
   (:import-from #:reblocks/dependencies
                 #:get-dependencies)
   (:import-from #:app/widgets/header
                 #:make-page-with-header)
   (:import-from #:app/pages/edit-profile
                 #:make-edit-profile-widget)
-  (:import-from #:app/pages/chat
-                #:make-chat-page)
   (:import-from #:app/pages/signup
                 #:make-signup-page)
   (:import-from #:app/pages/admin/profiles
