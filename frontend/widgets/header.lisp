@@ -54,9 +54,11 @@
            (avatar-url (when profile
                          (passport/client::user-avatar-url profile)))
            (admin? (when profile
-                     (passport/client::user-admin profile))))
+                     (passport/client::user-admin profile)))
+           (header-classes (when admin?
+                               "admin")))
       (reblocks/html:with-html
-        (:header
+        (:header :class header-classes
          (:div :class "navbar"
                (:div :class "navbar-main-logo"
                      "SovComTrade")
@@ -144,4 +146,10 @@
           :height 50px)
          ((:and .navbar-user-icon
                 .admin)
-          :border 3px solid gold)))))))
+          :border 3px solid gold)))
+
+       ;; Тёмная темя для админа!
+       ((:and header .admin)
+        :background black
+        (.navbar-main-logo
+         :color "#e0e0e0"))))))
