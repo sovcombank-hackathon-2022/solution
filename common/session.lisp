@@ -18,8 +18,6 @@
                 #:defvar-unbound)
   (:import-from #:app/utils
                 #:get-user-token)
-  (:import-from #:passport/client
-                #:make-passport)
   (:import-from #:reblocks/html
                 #:with-html)
   (:export
@@ -78,11 +76,12 @@
 (defun call-when-client (thunk)
   (let* ((token (get-user-token))
          (client (when token
-                   (passport/client::connect
-                    (make-passport)
-                    token)))
+                   (uiop:symbol-call :passport/client :connect
+                                     (uiop:symbol-call :passport/client :make-passport)
+                                     token)))
          (active-client-p (when client
-                            (passport/client:is-client client))))
+                            (uiop:symbol-call :passport/client :is-client
+                                              client))))
     (with-html
       (cond
         ((null token)

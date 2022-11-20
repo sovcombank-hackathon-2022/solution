@@ -1,0 +1,108 @@
+{
+  "methods": [
+    {
+      "name": "rpc.discover",
+      "params": [],
+      "result": {
+        "name": "OpenRPC Schema",
+        "schema": {
+          "$ref": "https://raw.githubusercontent.com/open-rpc/meta-schema/master/schema.json"
+        }
+      }
+    },
+    {
+      "name": "get_active_orders",
+      "params": [],
+      "result": {
+        "name": "get_active_orders_result",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "created_at": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "updated_at": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "synced": {
+                "type": "boolean"
+              },
+              "id": {
+                "type": "integer"
+              },
+              "user_id": {
+                "type": "integer"
+              },
+              "account_id": {
+                "type": "integer"
+              },
+              "type": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "currency": {
+                "type": "string",
+                "description": "Одно из значений из *currencies*."
+              },
+              "limit_price": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "description": "Значение курса при котором должна сработать заявка."
+              },
+              "muy_price": {
+                "type": "number",
+                "description": "Значение курса за который пользователь готов купить или продать."
+              }
+            },
+            "required": [
+              "muy_price",
+              "limit_price",
+              "currency",
+              "status",
+              "type",
+              "account_id",
+              "user_id",
+              "id",
+              "updated_at",
+              "created_at"
+            ],
+            "x-cl-class": "ORDER",
+            "x-cl-package": "PROCESSING/ORDER/MODEL",
+            "description": "Запись об изменении курса."
+          }
+        }
+      },
+      "summary": "Возвращает все не исполнившиеся ордера текущего пользователя.",
+      "paramStructure": "by-name"
+    }
+  ],
+  "openrpc": "1.0.0",
+  "info": {
+    "title": "Processing API",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "name": "default",
+      "url": "https://localhost/"
+    }
+  ]
+}
