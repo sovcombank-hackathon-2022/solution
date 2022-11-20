@@ -46,6 +46,8 @@
                 #:get-password-hash)
   (:import-from #:common/avatar
                 #:get-avatar-url-for)
+  (:import-from #:accounts/client
+                #:make-accounts)
   (:export
    #:start-me
    #:stop-me))
@@ -80,13 +82,21 @@
   (with-connection ()
     (cond
       ((is-email-available-p email)
-       (let ((user (mito:create-dao 'user
-                                    :id (get-next-user-id)
-                                    :email email
-                                    :fio fio
-                                    :avatar-url (get-avatar-url-for email)
-                                    :password-hash (get-password-hash password))))
-         (issue-token-for user)))
+       (let* ((user (mito:create-dao 'user
+                                     :id (get-next-user-id)
+                                     :email email
+                                     :fio fio
+                                     :avatar-url (get-avatar-url-for email)
+                                     :password-hash (get-password-hash password)))
+              (token (issue-token-for user))
+              (accounts-client (accounts/client::connect
+                                (make-accounts)
+                                token)))
+
+         ;; Рублёвый счёт есть всегда
+         (accounts/client:add-account accounts-client "RUB")
+         
+         token))
       (t
        (return-error (format nil "Email ~A уже занят."
                              email)
