@@ -83,6 +83,10 @@ var chart = LightweightCharts.createChart(document.getElementById('~A'), {
 	crosshair: {
 		mode: LightweightCharts.CrosshairMode.Normal,
 	},
+        timeScale: {
+		timeVisible: true,
+    secondsVisible: false,
+	}
 });
 
 var candleSeries = chart.addCandlestickSeries();

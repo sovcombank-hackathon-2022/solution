@@ -9,7 +9,7 @@
 
 
 (openrpc-client:generate-client accounts (cached-url-as "http://localhost:8002/openrpc.json"
-                                                        (asdf:system-relative-pathname :common "specs/rating.json")))
+                                                        (asdf:system-relative-pathname :common "specs/accounts.json")))
 
 (defvar *client* (make-accounts))
 
