@@ -95,13 +95,16 @@
                   }
                 ],
                 "description": "Значение курса по которому исполнилась заявка."
+              },
+              "user_token": {
+                "type": "string"
               }
             },
             "required": [
+              "user_token",
               "execution_price",
               "buy_price",
               "currency",
-              "status",
               "type",
               "buy_or_sell",
               "account_id",
@@ -249,13 +252,16 @@
                 }
               ],
               "description": "Значение курса по которому исполнилась заявка."
+            },
+            "user_token": {
+              "type": "string"
             }
           },
           "required": [
+            "user_token",
             "execution_price",
             "buy_price",
             "currency",
-            "status",
             "type",
             "buy_or_sell",
             "account_id",

@@ -82,7 +82,7 @@
 
 var chart = LightweightCharts.createChart(document.getElementById('~A'), {
 	width: 600,
-        height: 300,
+        height: 450,
 	crosshair: {
 		mode: LightweightCharts.CrosshairMode.Normal,
 	},

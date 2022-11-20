@@ -118,7 +118,8 @@
     (:div :class "column"
           (:div :class "row"
                 (:div :class "column"
-                      (:h1 "История изменений")
+                      (:h1 (fmt "История изменений"
+                                (currency widget)))
                       (render (chart-widget widget)))
                 (render (order-form widget)))
           (when (active-orders-widget widget)

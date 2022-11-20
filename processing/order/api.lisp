@@ -20,7 +20,9 @@
                 #:create-dao)
   (:import-from #:local-time
                 #:timestamp-to-unix
-                #:now))
+                #:now)
+  (:import-from #:app/utils
+                #:get-user-token))
 (in-package #:processing/order/api)
 
 
@@ -32,7 +34,8 @@
     (with-connection (:database-name "processing")
       (select-dao 'order
         (where 
-         (:= :user-id user-id))
+         (:and (:= :user-id user-id)
+               (:= :status "active")))
         (order-by (:desc :created-at))))))
 
 
@@ -62,4 +65,6 @@
                   :buy-price buy-price
                   :limit-price limit-price
                   :type order-type
+                  :status "active"
+                  :user-token (get-user-token)
                   :buy-or-sell buy-or-sell))))

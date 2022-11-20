@@ -247,9 +247,9 @@
               :value "Отменить"))))
 
 
-(defmethod render-popup-content ((widget withdraw-popup))
-  (with-html
-    (:p "Not implemented")))
+;; (defmethod render-popup-content ((widget withdraw-popup))
+;;   (with-html
+;;     (:p "Not implemented")))
 
 
 (defmethod get-dependencies ((widget accounts))
