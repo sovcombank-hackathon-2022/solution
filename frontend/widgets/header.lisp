@@ -26,9 +26,8 @@
 (defwidget page-with-header ()
   ((content :initarg :content
             :reader content)
-   ;; (tickers :initform (make-tickers-widget)
-   ;;          :reader tickers)
-   ))
+   (tickers :initform (make-tickers-widget)
+            :reader tickers)))
 
 
 (defun make-page-with-header (content)
@@ -93,7 +92,8 @@
                                   :href "/login/"
                                   "Войти")))))))
 
-        ;; (render (tickers widget))
+        (when (tickers widget)
+          (render (tickers widget)))
 
         (:div :class "page-content"
               (render (content widget)))))))
