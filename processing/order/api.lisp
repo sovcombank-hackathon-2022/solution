@@ -37,11 +37,16 @@
 
 
 
-(define-rpc-method (processing-api create-order) (account-id currency buy-price order-type
-                                                             &key limit-price)
+(define-rpc-method (processing-api create-order) (account-id currency order-type lots
+                                                             &key
+                                                             (buy-or-sell "buy")
+                                                             limit-price
+                                                             buy-price)
   (:param account-id integer)
   (:param currency string)
   (:param order-type string)
+  (:param buy-or-sell string)
+  (:param lots integer)
   (:param buy-price double-float)
   (:param limit-price double-float)
   (:summary "Даёт новую заявку на покупку или продажу.")
@@ -53,6 +58,8 @@
                   :user-id user-id
                   :account-id account-id
                   :currency currency
+                  :lots lots
                   :buy-price buy-price
                   :limit-price limit-price
-                  :type order-type))))
+                  :type order-type
+                  :buy-or-sell buy-or-sell))))

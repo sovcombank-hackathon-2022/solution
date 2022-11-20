@@ -46,6 +46,9 @@
               "account_id": {
                 "type": "integer"
               },
+              "buy_or_sell": {
+                "type": "string"
+              },
               "type": {
                 "type": "string"
               },
@@ -55,6 +58,10 @@
               "currency": {
                 "type": "string",
                 "description": "Одно из значений из *currencies*."
+              },
+              "lots": {
+                "type": "integer",
+                "description": "Сколько единиц валюты надо купить."
               },
               "limit_price": {
                 "oneOf": [
@@ -68,7 +75,14 @@
                 "description": "Значение курса при котором должна сработать заявка."
               },
               "buy_price": {
-                "type": "number",
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
                 "description": "Значение курса за который пользователь готов купить или продать."
               }
             },
@@ -77,6 +91,7 @@
               "currency",
               "status",
               "type",
+              "buy_or_sell",
               "account_id",
               "user_id",
               "id",
@@ -110,13 +125,6 @@
           "required": true
         },
         {
-          "name": "buy_price",
-          "schema": {
-            "type": "number"
-          },
-          "required": true
-        },
-        {
           "name": "order_type",
           "schema": {
             "type": "string"
@@ -124,9 +132,28 @@
           "required": true
         },
         {
+          "name": "lots",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        },
+        {
           "name": "limit_price",
           "schema": {
             "type": "number"
+          }
+        },
+        {
+          "name": "buy_price",
+          "schema": {
+            "type": "number"
+          }
+        },
+        {
+          "name": "buy_or_sell",
+          "schema": {
+            "type": "string"
           }
         }
       ],
@@ -161,6 +188,9 @@
             "account_id": {
               "type": "integer"
             },
+            "buy_or_sell": {
+              "type": "string"
+            },
             "type": {
               "type": "string"
             },
@@ -170,6 +200,10 @@
             "currency": {
               "type": "string",
               "description": "Одно из значений из *currencies*."
+            },
+            "lots": {
+              "type": "integer",
+              "description": "Сколько единиц валюты надо купить."
             },
             "limit_price": {
               "oneOf": [
@@ -183,7 +217,14 @@
               "description": "Значение курса при котором должна сработать заявка."
             },
             "buy_price": {
-              "type": "number",
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "number"
+                }
+              ],
               "description": "Значение курса за который пользователь готов купить или продать."
             }
           },
@@ -192,6 +233,7 @@
             "currency",
             "status",
             "type",
+            "buy_or_sell",
             "account_id",
             "user_id",
             "id",

@@ -34,6 +34,10 @@
                :type integer
                :col-type :bigint
                :reader order-account-id)
+   (buy-or-sell :initarg :buy-or-sell
+                :type string
+                :col-type :text
+                :reader order-buy-or-sell)
    (type :initarg :type
          :type string
          :col-type :text
@@ -47,21 +51,31 @@
              :col-type :text
              :reader order-currency
              :documentation "Одно из значений из *currencies*.")
+   (lots :initarg :lots
+         :initform nil
+         :type integer
+         :col-type :integer
+         :reader order-lots
+         :documentation "Сколько единиц валюты надо купить.")
    (limit-price :initarg :limit-price
                 :initform nil
                 :type (or null
                           double-float)
-                :col-type :decimal
+                :col-type (or :decimal
+                              :null)
                 :inflate (lambda (item)
                            (when item
                              (coerce item 'double-float)))
                 :reader order-limit-price
                 :documentation "Значение курса при котором должна сработать заявка.")
    (buy-price :initarg :buy-price
-              :type double-float
-              :col-type :decimal
+              :type (or null
+                        double-float)
+              :col-type (or :decimal
+                            :null)
               :inflate (lambda (item)
-                         (coerce item 'double-float))
+                         (when item
+                           (coerce item 'double-float)))
               :reader order-buy-price
               :documentation "Значение курса за который пользователь готов купить или продать."))
   (:documentation "Запись об изменении курса.")

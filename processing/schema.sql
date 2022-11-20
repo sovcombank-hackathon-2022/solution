@@ -12,3 +12,12 @@ CREATE TABLE "order" (
 );
 
 CREATE INDEX order_user_id_status ON "order" (user_id, status);
+
+
+alter table "order" ADD column "lots" INTEGER NOT NULL DEFAULT 1;
+
+alter table "order" alter column limit_price drop not null;
+alter table "order" alter column buy_price drop not null;
+
+
+alter table "order" add column buy_or_sell text default 'buy';
