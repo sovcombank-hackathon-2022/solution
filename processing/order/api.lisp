@@ -39,6 +39,19 @@
         (order-by (:desc :created-at))))))
 
 
+(define-rpc-method (processing-api get-executed-orders) ()
+  (:summary "Возвращает все исполнившиеся ордера текущего пользователя.")
+  (:result (list-of order))
+
+  (with-session (user-id)
+    (with-connection (:database-name "processing")
+      (select-dao 'order
+        (where 
+         (:and (:= :user-id user-id)
+               (:= :status "executed")))
+        (order-by (:desc :created-at))))))
+
+
 
 (define-rpc-method (processing-api create-order) (account-id currency order-type lots
                                                              &key

@@ -134,14 +134,21 @@
                       (make-processing)
                       token)))
            (active-orders (processing/client:get-active-orders client))
+           (executed-orders (processing/client:get-executed-orders client))
            (order-widgets (mapcar #'make-order-widget
-                                  active-orders)))
+                                  active-orders))
+           (executed-order-widgets (mapcar #'make-order-widget
+                                           executed-orders)))
       (:div :class "column"
             (:h1 "Текущие заявки")
             (cond
               (order-widgets (mapc #'render order-widgets))
               (t
-               (:p "Разместите заявку и она появится в этом разделе.")))))))
+               (:p "Разместите заявку и она появится в этом разделе.")))
+            
+            (when executed-order-widgets
+              (:h1 "Исполненные заявки")
+              (mapc #'render executed-order-widgets))))))
 
 
 (defmethod render ((widget order-widget))
@@ -163,11 +170,18 @@
                                      "market")
                        "По рыночной"
                        "С лимитом"))
-            (:span :class "controls"
-                   (reblocks-ui/form:render-form-and-button :Отменить
-                                                            (lambda (&key &allow-other-keys)
-                                                              (reblocks/response:send-script "alert(\"Отмена пока не реализована.\")"))
-                                                             :button-class "button secondary tiny"))))))
+            (cond
+              ((string-equal (processing/client:order-status order)
+                             "active")
+               (:span :class "controls"
+                      (reblocks-ui/form:render-form-and-button :Отменить
+                                                               (lambda (&key &allow-other-keys)
+                                                                 (reblocks/response:send-script "alert(\"Отмена пока не реализована.\")"))
+                                                               :button-class "button secondary tiny")))
+              (t
+               (:span (fmt "Исполнено по: ~,4G"
+                           (coerce (processing/client:order-execution-price order)
+                                   'single-float)))))))))
 
 
 (defmethod render ((widget order-form))

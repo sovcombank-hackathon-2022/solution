@@ -277,6 +277,118 @@
       },
       "summary": "Даёт новую заявку на покупку или продажу.",
       "paramStructure": "by-name"
+    },
+    {
+      "name": "get_executed_orders",
+      "params": [],
+      "result": {
+        "name": "get_executed_orders_result",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "created_at": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "updated_at": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "x-cl-class": "T",
+                "x-cl-package": "COMMON-LISP"
+              },
+              "synced": {
+                "type": "boolean"
+              },
+              "id": {
+                "type": "integer"
+              },
+              "user_id": {
+                "type": "integer"
+              },
+              "account_id": {
+                "type": "integer"
+              },
+              "buy_or_sell": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "currency": {
+                "type": "string",
+                "description": "Одно из значений из *currencies*."
+              },
+              "lots": {
+                "type": "integer",
+                "description": "Сколько единиц валюты надо купить."
+              },
+              "limit_price": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "description": "Значение курса при котором должна сработать заявка."
+              },
+              "buy_price": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "description": "Значение курса за который пользователь готов купить или продать."
+              },
+              "execution_price": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "description": "Значение курса по которому исполнилась заявка."
+              },
+              "user_token": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "user_token",
+              "execution_price",
+              "buy_price",
+              "currency",
+              "type",
+              "buy_or_sell",
+              "account_id",
+              "user_id",
+              "id",
+              "updated_at",
+              "created_at"
+            ],
+            "x-cl-class": "ORDER",
+            "x-cl-package": "PROCESSING/ORDER/MODEL",
+            "description": "Запись об изменении курса."
+          }
+        }
+      },
+      "summary": "Возвращает все исполнившиеся ордера текущего пользователя.",
+      "paramStructure": "by-name"
     }
   ],
   "openrpc": "1.0.0",
