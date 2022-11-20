@@ -141,19 +141,20 @@ function mergeTickToBar(time, price) {
 
 
 (defun process-updates (widget)
-  (log:info "Updating" widget "via websocket.")
-  (let* ((rates-api (rates/client::connect
-                     (make-rates)
-                     (get-user-token)))
-         (rate (rates/client:get-currency-rate rates-api
-                                               (chart-currency widget)))
-         (timestamp (* (ceiling
-                        (/ (timestamp-to-unix (now))
-                           (candle-scale widget)))
-                       (candle-scale widget))))
-    (reblocks-websocket:send-script
-     `(ps:chain (merge-tick-to-bar
-                 ,timestamp ,rate)))))
+  (with-log-unhandled ()
+    (log:info "Updating" widget "via websocket.")
+    (let* ((rates-api (rates/client::connect
+                       (make-rates)
+                       (get-user-token)))
+           (rate (rates/client:get-currency-rate rates-api
+                                                 (chart-currency widget)))
+           (timestamp (* (ceiling
+                          (/ (timestamp-to-unix (now))
+                             (candle-scale widget)))
+                         (candle-scale widget))))
+      (reblocks-websocket:send-script
+       `(ps:chain (merge-tick-to-bar
+                   ,timestamp ,rate))))))
 
 
 (defmethod initialize-instance :after ((widget chart) &rest rest)

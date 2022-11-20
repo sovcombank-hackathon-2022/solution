@@ -48,8 +48,9 @@
                     amount)
                  0)
           (return-error (fmt "Не хватает ~A ~A."
-                             (- (+ amount
-                                   (account-amount account)))
+                             (coerce (- (+ amount
+                                           (account-amount account)))
+                                     'single-float)
                              (account-currency account))))
         
         (create-dao 'operation

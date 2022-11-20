@@ -55,10 +55,8 @@
        (:td 
         (:img :class "small-avatar"
               :src (passport/client:user-avatar-url user)))
-       (:td "Email"
-            (passport/client:user-email user))
-       (:td "ФИО"
-            (passport/client:user-fio user))
+       (:td (passport/client:user-email user))
+       (:td (passport/client:user-fio user))
        (:td :class "user-actions"
             (render-form-and-button :block
                                     #'block-user

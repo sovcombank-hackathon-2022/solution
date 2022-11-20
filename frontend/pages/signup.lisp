@@ -18,7 +18,9 @@
                 #:rpc-error
                 #:rpc-error-message)
   (:import-from #:app/forms
-                #:with-html-form))
+                #:with-html-form)
+  (:import-from #:reblocks-ui/form
+                #:form-error))
 (in-package #:app/pages/signup)
 
 
@@ -30,9 +32,19 @@
   (make-instance 'signup-page))
 
 
+(defun validate-password (password)
+  (when (or (< (length password) 10))
+    (log:error "Too short password")
+    (form-error (fmt "Пароль должен состоять из 10 или более символов и включать хотя бы одну цифру и спецсимвол."))))
+
+
 (defmethod render ((widget signup-page))
   (flet ((signup-user (&key email password fio &allow-other-keys)
-           (log:info "Creating a new user in" email password fio)
+           (log:warn "Creating a new user in" email fio)
+
+           (validate-password password)
+           (log:error "Going further")
+           
            (handler-case
                (let* ((client (passport/client::connect (make-passport)))
                       (token (passport/client::signup client email password fio)))
