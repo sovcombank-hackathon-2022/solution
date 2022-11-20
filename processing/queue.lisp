@@ -41,8 +41,8 @@
                        "market")
          ;; Тут у нас симуляция того, что заявка исполнилась, поэтому кидаем кубик и с вероятностью 30% совершаем покупку
          ;; по рыночной цене
-         (when (< (random 1.0) 0.3)
-           (log:info "TRACE 1")
+         ;; TODO: пока отключил чтобы исполнялось быстрее
+         (when (< (random 1.0) 1.0)
            (let* ((token (get-user-token))
                   (rates-client (when token
                                   (rates/client::connect

@@ -168,7 +168,7 @@
                  (:a :href (fmt "/currency/~A"
                                 (account-currency widget))
                      :class "button tiny"
-                     "Купить"))))))))
+                     "Купить или продать"))))))))
 
 
 (defmethod render-popup-content ((widget deposit-popup))
