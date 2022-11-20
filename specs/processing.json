@@ -84,9 +84,21 @@
                   }
                 ],
                 "description": "Значение курса за который пользователь готов купить или продать."
+              },
+              "execution_price": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "description": "Значение курса по которому исполнилась заявка."
               }
             },
             "required": [
+              "execution_price",
               "buy_price",
               "currency",
               "status",
@@ -226,9 +238,21 @@
                 }
               ],
               "description": "Значение курса за который пользователь готов купить или продать."
+            },
+            "execution_price": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "description": "Значение курса по которому исполнилась заявка."
             }
           },
           "required": [
+            "execution_price",
             "buy_price",
             "currency",
             "status",

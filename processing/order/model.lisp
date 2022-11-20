@@ -77,7 +77,17 @@
                          (when item
                            (coerce item 'double-float)))
               :reader order-buy-price
-              :documentation "Значение курса за который пользователь готов купить или продать."))
+              :documentation "Значение курса за который пользователь готов купить или продать.")
+   (execution-price :initarg :execution-price
+              :type (or null
+                        double-float)
+              :col-type (or :decimal
+                            :null)
+              :inflate (lambda (item)
+                         (when item
+                           (coerce item 'double-float)))
+              :reader order-execution-price
+              :documentation "Значение курса по которому исполнилась заявка."))
   (:documentation "Запись об изменении курса.")
   (:metaclass dao-table-class))
 
