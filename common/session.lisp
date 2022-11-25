@@ -67,10 +67,19 @@
       `(let ((,session-var (decode-current-jwt-token)))
          (when (and ,require
                     (not ,session-var))
+           (ignore-errors
+            (when (boundp 'openrpc-server/vars::*current-request*)
+              (log:error "Current request requires authentication: " 
+                         openrpc-server/vars::*current-request*)
+              (setf *latest-error-request*
+                    openrpc-server/vars::*current-request*)))
            (return-error "Этот метод требует аутентификации."
                          :code 3))
          (let (,@bindings)
            ,@body)))))
+
+
+(defvar *latest-error-request* nil)
 
 
 (defun call-when-client (thunk)

@@ -11,6 +11,8 @@
 
 
 (defun start-all ()
+  (when (probe-file "config.lisp")
+    (load "config.lisp"))
   (app/server::start)
   (passport/server::start-me)
   (rates/server::start-me)
